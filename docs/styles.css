@@ -24,7 +24,10 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 3.5rem;   /* keep focused links clear of the sticky jump bar */
+}
 
 body {
   background: var(--paper);
@@ -108,10 +111,16 @@ body {
    ----------------------------------------------------------------- */
 
 body {
+  position: relative;   /* anchors the section rules below */
   max-width: calc(var(--page) + 3rem);
   margin: 0 auto;
   padding: 3rem var(--pad) 6rem calc(var(--inset) + var(--pad));
 }
+
+/* Every top-level block clears the floated heading. Without this, a
+   section whose first element is not a dl drifts up beside the
+   previous heading, and the section rule cuts through its content. */
+main > :is(p, ul, ol, dl, div, h2) { clear: left; }
 
 /* Masthead and jump bar reclaim the rail so they span the full width. */
 .masthead, .jump { margin-left: calc(-1 * var(--inset)); }
@@ -129,6 +138,20 @@ h1 {
   color: var(--ink);
   scroll-margin-top: 3.5rem;
 }
+
+/* Hairline rule above each section, spanning rail and text column.
+   It is positioned against body, so left/right are the body padding
+   minus the rail; the first section already sits under the jump bar. */
+h1::before {
+  content: "";
+  position: absolute;
+  left: var(--pad);
+  right: var(--pad);
+  margin-top: -1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.masthead h1::before, main > h1:first-child::before { content: none; }
+
 .masthead h1 {
   float: none;
   width: auto;
@@ -194,9 +217,48 @@ ul li::marker { color: var(--rule); }
 }
 .note p { margin: 0.2rem 0 0.3rem; }
 
+/* --- Publication filter (web only, built by pub-filter.html) -------- */
+
+.pub-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0 0.6rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+}
+.pub-filter button {
+  font: inherit;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: border-color 120ms ease;  /* colours switch instantly, so contrast never dips */
+}
+.pub-filter button:hover { border-color: var(--accent); color: var(--accent); }
+.pub-filter button[aria-pressed="true"] {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.pub-filter button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pub-filter .count { margin-left: 0.15rem; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 /* --- Links ---------------------------------------------------------- */
 
 a { color: var(--accent); text-underline-offset: 2px; }
+a.uri { overflow-wrap: anywhere; }  /* long bare URLs wrap instead of scrolling sideways */
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* --- Narrow screens -------------------------------------------------- */
@@ -217,6 +279,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     text-align: left;
     font-size: 0.9rem;
   }
+  h1::before { left: 1.1rem; right: 1.1rem; margin-top: -1.1rem; }
   .columns-two { columns: 1; }
 }
 
@@ -227,7 +290,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
    ----------------------------------------------------------------- */
 
 @media print {
-  .jump, .pdf-button { display: none; }
+  .jump, .pdf-button, .pub-filter { display: none; }
+  #publication-list li[hidden] { display: list-item; }  /* print the full list */
   body {
     max-width: none;
     margin: 0;
@@ -236,5 +300,6 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   }
   a { color: var(--ink); text-decoration: none; }
   h1 { break-after: avoid; }
+  h1::before { left: 0; right: 0; }
   li, dd, dt { break-inside: avoid; }
 }

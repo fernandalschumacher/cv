@@ -1,0 +1,68 @@
+<script>
+// Web only. Merges the two publication lists into one, newest first,
+// and adds buttons to filter by type. Without JavaScript, and in the
+// PDF, the two headed lists in cv.qmd remain as written.
+(function () {
+  var groups = [
+    { id: "statistical-methodology", type: "methods", label: "Methodology" },
+    { id: "statistical-applications", type: "applied", label: "Applications" }
+  ];
+
+  // Collect everything first; change nothing unless both lists are found.
+  var found = groups.map(function (g) {
+    var heading = document.getElementById(g.id);
+    var list = heading && heading.nextElementSibling;
+    return heading && list && list.tagName === "OL" ? { g: g, heading: heading, list: list } : null;
+  });
+  if (found.indexOf(null) !== -1) return;
+
+  var items = [];
+  found.forEach(function (f) {
+    Array.prototype.forEach.call(f.list.children, function (li) {
+      var m = li.textContent.match(/\((\d{4})\)/);
+      li.dataset.type = f.g.type;
+      items.push({ li: li, year: m ? +m[1] : 0 });
+    });
+  });
+  items.sort(function (a, b) { return b.year - a.year; });  // stable: methods first within a year
+
+  var merged = document.createElement("ol");
+  merged.id = "publication-list";
+  items.forEach(function (it) { merged.appendChild(it.li); });
+
+  var bar = document.createElement("div");
+  bar.className = "pub-filter";
+  bar.setAttribute("role", "group");
+  bar.setAttribute("aria-label", "Show publications");
+
+  var status = document.createElement("p");
+  status.className = "visually-hidden";
+  status.setAttribute("aria-live", "polite");
+
+  var filters = [{ type: "all", label: "All" }].concat(groups);
+  var buttons = filters.map(function (f) {
+    var n = f.type === "all" ? items.length
+      : items.filter(function (it) { return it.li.dataset.type === f.type; }).length;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-controls", "publication-list");
+    b.innerHTML = f.label + ' <span class="count">' + n + "</span>";
+    b.addEventListener("click", function () {
+      items.forEach(function (it) {
+        it.li.hidden = f.type !== "all" && it.li.dataset.type !== f.type;
+      });
+      buttons.forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      status.textContent = "Showing " + n + (f.type === "all" ? "" : " " + f.label.toLowerCase()) + " publications";
+    });
+    b.setAttribute("aria-pressed", String(f.type === "all"));
+    bar.appendChild(b);
+    return b;
+  });
+
+  var first = found[0].heading;
+  first.parentNode.insertBefore(bar, first);
+  first.parentNode.insertBefore(status, first);
+  first.parentNode.insertBefore(merged, first);
+  found.forEach(function (f) { f.heading.remove(); f.list.remove(); });
+})();
+</script>
