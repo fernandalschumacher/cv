@@ -22,7 +22,7 @@ format:
     geometry:
       - top=0.85in
       - bottom=0.85in
-      - left=0.8in
+      - left=2.1in   # 0.75in edge + 1.35in heading rail (\marginheadwidth in preamble.tex)
       - right=0.75in
     include-in-header: preamble.tex
 filters:

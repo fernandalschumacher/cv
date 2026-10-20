@@ -27,7 +27,9 @@
 \color{ink}
 
 % --- Measurements ----------------------------------------------
-% Width reserved in the left margin for section headings.
+% Width reserved in the left margin for section headings. The rail sits
+% inside the page's left margin, so `left` in the geometry block of cv.qmd
+% must be this plus the outer edge, or the rail runs off the paper.
 \newlength{\marginheadwidth}
 \setlength{\marginheadwidth}{1.35in}
 % Gap between the heading rail and the text column.
