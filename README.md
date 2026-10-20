@@ -11,6 +11,8 @@ One source file produces both the web page and the PDF.
 | `styles.css` | Web design. Mirrors the PDF layout. |
 | `divs.lua` | Tiny filter so `::: {.columns-two}` and `::: {.note}` work in the PDF too. |
 | `_quarto.yml` | Sends rendered output to `docs/`, which is what GitHub Pages serves. |
+| `pub-filter.html` | Web only: merges the publication lists and adds the Methodology / Applications buttons. |
+| `scripts/`, `.github/` | The twice-monthly check for new publications (see below). |
 | `docs/` | Generated. Never edit by hand. |
 
 ## Rendering
@@ -74,6 +76,29 @@ To set a list in two columns in both outputs, wrap it:
 - Second item
 :::
 ```
+
+## New-publication check
+
+On the 1st and 15th of each month a GitHub Action
+(`.github/workflows/check-publications.yml`) runs
+`scripts/check-publications.ps1`. It searches your ORCID record, Crossref
+(by ORCID and by name) and PubMed for the past year, and compares what it
+finds with the publications in `cv.qmd`. Google Scholar is not used: it has
+no API and blocks automated queries.
+
+If anything is missing, or a paper listed under *Papers submitted* has been
+published, it opens an issue labelled `new-publication`, and GitHub emails
+you. Update `cv.qmd`, render, push, and close the issue. If a later run finds
+something else while the issue is open, it updates the issue and comments.
+
+- To run it now: Actions tab → *Check for new publications* → *Run workflow*.
+- To run it locally: `./scripts/check-publications.ps1` writes
+  `publication-report.md` when there is something to report.
+- To silence a false match (a namesake on PubMed, a conference abstract),
+  add its DOI to `scripts/publication-ignore.txt`.
+- GitHub pauses scheduled workflows in a public repository after 60 days
+  without a commit, and emails you first. Re-enable it from the Actions tab,
+  or push any update to the CV.
 
 ## Changing the design
 

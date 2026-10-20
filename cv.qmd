@@ -187,6 +187,7 @@ An asterisk (\*) marks a student advisee.
 ## Statistical applications
 
 1. Zhang, Y., **Schumacher, F. L.**, Clark, L. A., Clark, B. C. (2026). Leg strength and neural activation deficits in older adults with multiple sclerosis. *Multiple Sclerosis and Related Disorders*, 108, 107050.
+1. Nassani, L. M., Bencharit, S., **Schumacher, F. L.**, Mandarano, N. A., Place, L. A., Fernandes, G. V. O. (2026). Comparative analysis of dental students' preferences and satisfaction with procedures and outcomes using resin 3D-printing and conventional methods for provisional restoration fabrication. *Dental and Medical Problems*, 63(2), 349–356.
 1. Warren, E., **Schumacher, F. L.**, Keder, L., Lawley, M., Goedken, P., Dupper, A. C., Gallo, M. F. (2025). Is 6 weeks postpartum too late for contraceptive counseling in the US? A look into the timing of postpartum intercourse. *Journal of Sex Research*, 1–5.
 1. Allen, M. D., Thompson, A., Clark, B. C., **Schumacher, F. L.**, Zhang, Y. (2025). Multiple sclerosis and sarcopenia: analysis of population-level prevalence and key risk factors from the UK Biobank. *Multiple Sclerosis and Related Disorders*, 102, 106629.
 1. Vavetsi, K., Mendes, K., Gomes, A. T., Marques, T., Rosa, N., Mandarano, N., **Schumacher, F. L.**, Tatakis, D. N. (2025). TAM pathway receptor proteins: differential expression in healthy human masticatory mucosa. *Journal of Periodontal Research*, 60(11), 1168–1170.

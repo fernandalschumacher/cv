@@ -1,0 +1,45 @@
+# Twice a month, look for publications missing from cv.qmd and open (or
+# update) a GitHub issue when there are any. GitHub emails you about the
+# issue, which is the prompt to update the CV. Close the issue once done.
+# Run it by hand from the Actions tab with "Run workflow".
+
+name: Check for new publications
+
+on:
+  schedule:
+    - cron: "0 13 1,15 * *"   # 1st and 15th of each month, 13:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Search ORCID, Crossref and PubMed
+        shell: pwsh
+        run: ./scripts/check-publications.ps1 -OutFile publication-report.md
+
+      - name: Open or update the issue
+        if: hashFiles('publication-report.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create new-publication --color 2e4a6b \
+            --description "Found by the publication check" --force
+          num=$(gh issue list --label new-publication --state open \
+            --json number --jq '.[0].number // empty')
+          if [ -z "$num" ]; then
+            gh issue create --label new-publication \
+              --title "Publications to add to the CV" \
+              --body-file publication-report.md
+          elif [ "$(gh issue view "$num" --json body --jq .body)" != "$(cat publication-report.md)" ]; then
+            # The list changed since the issue was opened: refresh it, and
+            # comment so the change sends a notification.
+            gh issue edit "$num" --body-file publication-report.md
+            gh issue comment "$num" --body "The list changed. The issue description is up to date."
+          fi
