@@ -1,12 +1,15 @@
 ---
 format:
   html:
+    pagetitle: "Fernanda Lang Schumacher, CV"
+    description-meta: "Curriculum vitae. Assistant Professor of Biostatistics, The Ohio State University."
     output-file: index.html
     theme: none
     css: styles.css
     toc: false
     anchor-sections: false
   pdf:
+    pagetitle: "Fernanda Lang Schumacher, CV"
     output-file: cv.pdf
     pdf-engine: xelatex
     documentclass: article
