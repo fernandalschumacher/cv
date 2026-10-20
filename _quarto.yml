@@ -1,0 +1,10 @@
+project:
+  type: default
+  output-dir: docs
+  render:
+    - cv.qmd
+
+# styles.css is referenced from cv.qmd but Quarto needs to be told to
+# copy it into the output directory alongside the rendered page.
+resources:
+  - styles.css

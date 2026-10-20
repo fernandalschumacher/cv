@@ -1,0 +1,1146 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  10pt,
+  letterpaper,
+]{article}
+\usepackage{xcolor}
+\usepackage[top=0.85in,bottom=0.85in,left=0.8in,right=0.75in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+% ---------------------------------------------------------------
+% PDF design for the CV. Edit typefaces and colours here.
+% ---------------------------------------------------------------
+
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{needspace}
+\usepackage{microtype}
+\usepackage{etoolbox}
+\usepackage{ragged2e}
+
+% --- Typefaces -------------------------------------------------
+% TeX Gyre Pagella and Heros ship with every TeX distribution,
+% so this renders identically on any machine with no extra setup.
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}[Scale=MatchLowercase]
+
+% --- Colours ---------------------------------------------------
+\definecolor{ink}{HTML}{1A1815}
+\definecolor{muted}{HTML}{6E6862}
+\definecolor{accent}{HTML}{2E4A6B}
+\definecolor{rulecol}{HTML}{D8D3CC}
+\color{ink}
+
+% --- Measurements ----------------------------------------------
+% Width reserved in the left margin for section headings.
+\newlength{\marginheadwidth}
+\setlength{\marginheadwidth}{1.35in}
+% Gap between the heading rail and the text column.
+\newlength{\margingutter}
+\setlength{\margingutter}{0.25in}
+% Width reserved for dates in dated entries.
+\newlength{\datewidth}
+\setlength{\datewidth}{\dimexpr\marginheadwidth-\margingutter\relax}
+
+% --- Section headings sit in the left margin -------------------
+\titleformat{\section}[leftmargin]
+  {\normalfont\sffamily\bfseries\small\color{ink}\raggedleft}
+  {}{0pt}{}
+\titlespacing*{\section}{\marginheadwidth}{1.6em}{\margingutter}
+
+\titleformat{\subsection}[hang]
+  {\normalfont\sffamily\small\color{muted}}
+  {}{0pt}{}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.25em}
+
+% Keep a heading from stranding itself at the foot of a page.
+\pretocmd{\section}{\needspace{3\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{3\baselineskip}}{}{}
+
+% --- Lists -----------------------------------------------------
+% Dated entries: the date hangs in its own fixed-width column.
+\renewcommand{\descriptionlabel}[1]{%
+  \llap{\makebox[\datewidth][r]{\normalfont\sffamily\footnotesize\color{muted}#1}%
+        \hspace{\margingutter}}}
+\setlist[description]{
+  leftmargin=0pt,
+  labelsep=0pt,
+  itemindent=0pt,
+  itemsep=0.5em,
+  parsep=0pt,
+  topsep=0.35em
+}
+\setlist[itemize]{leftmargin=1.1em, itemsep=0.25em, topsep=0.3em, parsep=0pt, label=\textcolor{rulecol}{\rule[0.25ex]{0.4em}{0.5pt}}}
+\setlist[enumerate]{leftmargin=1.8em, itemsep=0.35em, topsep=0.3em, parsep=0pt, font=\sffamily\footnotesize\color{muted}}
+
+% --- Page furniture --------------------------------------------
+\pagestyle{fancy}
+\fancyhfoffset[L]{\marginheadwidth}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[L]{\sffamily\footnotesize\color{muted}Fernanda Lang Schumacher}
+\fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}
+\fancypagestyle{plain}{\fancyhf{}%
+  \fancyfoot[L]{\sffamily\footnotesize\color{muted}Fernanda Lang Schumacher}%
+  \fancyfoot[R]{\sffamily\footnotesize\color{muted}\thepage}}
+
+\setlength{\parindent}{0pt}
+\frenchspacing
+\raggedright
+\setlength{\parskip}{0.35em}
+\linespread{1.06}
+
+% --- Name block ------------------------------------------------
+\newcommand{\namehead}{%
+  \thispagestyle{plain}%
+  \noindent\hspace*{-\marginheadwidth}%
+  \begin{minipage}{\dimexpr\textwidth+\marginheadwidth\relax}%
+  \noindent
+  {\sffamily\bfseries\fontsize{21}{23}\selectfont\color{ink}Fernanda Lang Schumacher}\par
+  \vspace{0.5em}
+  {\normalsize Assistant Professor, Division of Biostatistics\\
+   College of Public Health, The Ohio State University}\par
+  \vspace{0.45em}
+  {\sffamily\footnotesize\color{muted}210 Cunz Hall, 1841 Neil Avenue, Columbus, OH 43210\\
+   \href{mailto:schumacher.313@osu.edu}{schumacher.313@osu.edu}}\par
+  \vspace{0.9em}
+  \vspace{0.25em}
+  {\color{rulecol}\hrule height 0.6pt}%
+  \vspace{0.3em}\par
+  \makebox[\linewidth][r]{\sffamily\scriptsize\color{muted}Updated \today}%
+  \end{minipage}%
+  \vspace{0.4em}
+}
+
+% --- Small note line (the student-advisee footnote) ------------
+\newenvironment{cvnote}%
+  {\par\vspace{-0.2em}\begingroup\footnotesize\itshape\color{muted}}%
+  {\endgroup\par\vspace{0.2em}}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  colorlinks=true,
+  linkcolor={accent},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={accent},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\author{}
+\date{}
+\begin{document}
+
+
+\namehead
+
+\section{Education}\label{education}
+
+\begin{description}
+\tightlist
+\item[2018--2021]
+\textbf{Ph.D.~in Statistics.} State University of Campinas (UNICAMP),
+Campinas, SP, Brazil. Advisors: Larissa Avila Matos and Victor Hugo
+Lachos Davila.
+\item[2015--2016]
+\textbf{M.Sc. in Statistics.} State University of Campinas (UNICAMP),
+Campinas, SP, Brazil. Advisors: Victor Hugo Lachos Davila and Filidor
+Vilca Labra.
+\item[2011--2014]
+\textbf{B.S. in Statistics.} State University of Maringa (UEM), Maringa,
+PR, Brazil. Graduated with honors.
+\end{description}
+
+\section{Professional experience}\label{professional-experience}
+
+\begin{description}
+\tightlist
+\item[04/2022--present]
+\textbf{Assistant Professor}, Division of Biostatistics, College of
+Public Health, The Ohio State University, Columbus, OH, USA.
+\item[11/2016--02/2018]
+\textbf{Statistician}, Technologist in geographic and statistical
+information, Brazilian Institute of Geography and Statistics (IBGE), Rio
+de Janeiro, RJ, Brazil.
+\item[08/2017--12/2017]
+\textbf{Instructor}, Department of Statistics, National School of
+Statistical Sciences (ENCE), Rio de Janeiro, RJ, Brazil.
+\item[08/2013--07/2014]
+\textbf{Project director and founding member}, \emph{Estats Consultoria}
+(junior company of statistical consulting), UEM, Maringa, PR, Brazil.
+\end{description}
+
+\section{Prizes and awards}\label{prizes-and-awards}
+
+\begin{description}
+\tightlist
+\item[2026]
+IBS-CWS Florence Nightingale Award.
+\item[2025]
+Jacob Palis Award (Fulbright Brazil). In collaboration with Rojas
+Guerra, R., Figard, R., Fontana Ribeiro, T., and Pena-Ramirez, F. A.
+\item[2024]
+CAPES visiting scholar travel award.
+\item[2023]
+IMS New Researchers Conference travel award.
+\item[2021]
+Winner of the competition for students of statistics in association with
+the Conference in Honour of Fred Smith and Chris Skinner.
+\item[2018]
+Second place, Best Master's Thesis contest, 23rd SINAPE.
+\end{description}
+
+\section{Research interests}\label{research-interests}
+
+\begin{multicols}{2}\raggedright
+
+\begin{itemize}
+\tightlist
+\item
+  Censored regression models
+\item
+  DNA methylation patterns
+\item
+  Linear and nonlinear mixed-effects models
+\item
+  Longitudinal models
+\item
+  Missing data analysis
+\item
+  Multiple sclerosis disease
+\item
+  Robust models
+\item
+  Skew-elliptical and elliptical distributions
+\item
+  Variable selection for mixed models
+\end{itemize}
+
+\end{multicols}
+
+\section{Grants and contracts}\label{grants-and-contracts}
+
+\subsection{Active}\label{active}
+
+\begin{description}
+\tightlist
+\item[07/2024--06/2027]
+\textbf{NMSS BI-2306-41591} (PI: Schumacher). Epigenetics in MS: An
+evaluation of biological aging and disease severity. Role: Principal
+Investigator (30\% support).
+\item[08/2026--07/2027]
+\textbf{IPR Seed Grant} (PI: Schumacher). More Than a Number: Bayesian
+Frameworks for Uncertainty Propagation on Epigenetic Clock Predictions.
+Role: Principal Investigator.
+\item[07/2024--06/2029]
+\textbf{NIH/NIA K23 AG084848} (PI: Yinan Zhang). Associations of
+biological aging with outcomes and immune dysregulation in multiple
+sclerosis. Role: Co-Investigator (5\% support).
+\end{description}
+
+\subsection{Completed}\label{completed}
+
+\begin{description}
+\tightlist
+\item[09/2022--05/2025]
+\textbf{NIH/NIA R03AG078946} (PI: Yinan Zhang). Markers of Biological
+Aging in Multiple Sclerosis. Role: Biostatistician (5--10\% support).
+\item[08/2018--05/2025]
+\textbf{NIH/NICHD R01HD091274-01A1} (PI: Maria Gallo). Postpartum Family
+Planning. Role: Co-Investigator (10\% support).
+\end{description}
+
+\section{Publications}\label{publications}
+
+\begin{cvnote}
+
+An asterisk (*) marks a student advisee.
+
+\end{cvnote}
+
+\subsection{Statistical methodology}\label{statistical-methodology}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Schumacher, F. L.}, Matos, L. A., Ramos, P. L., Louzada, F.
+  (2026). Bayesian estimation in scale mixture of skew-normal linear
+  mixed models using Hamiltonian Monte Carlo. \emph{Brazilian Journal of
+  Probability and Statistics}, in press.
+\item
+  \textbf{Schumacher, F. L.}, Cutter, G., Burd, C. E., Archer, K.,
+  Zhang, Y. (2026). Clocks out of sync: increased epigenetic aging
+  variability in multiple sclerosis. \emph{Journal of the Neurological
+  Sciences}, 485, 125904.
+\item
+  Mani, S. K.*, Rempala, G. A., Kenah, E., \textbf{Schumacher, F. L.}
+  (2026). Short-term Bayesian influenza forecasting in a hospital
+  environment using a linear Kalman filter. \emph{Journal of Theoretical
+  Biology}, 624, 112422.
+\item
+  Oliveira, D. C., \textbf{Schumacher, F. L.}, Lachos, V. H. (2025). The
+  use of the EM algorithm for regularization problems in
+  high-dimensional linear mixed-effects models. \emph{Statistical
+  Methods in Medical Research}, online ahead of print.
+\item
+  \textbf{Schumacher, F. L.}, Matos, L. A., Lachos, V. H. (2025).
+  skewlmm: An R package for fitting skewed and heavy-tailed linear mixed
+  models. \emph{Journal of Statistical Software}, 115(7), 1--32.
+\item
+  \textbf{Schumacher, F. L.}, Cutter, G. (2025). The ever growing
+  incidence of meta-analyses and reviews. \emph{Multiple Sclerosis and
+  Related Disorders}, 104, 106753.
+\item
+  Travassos, K.*, Matos, L. A., \textbf{Schumacher, F. L.} (2025).
+  Diagnostic analysis in scale mixture of skew-normal linear mixed
+  models. \emph{Statistica Neerlandica}, 79(1), e70002.
+\item
+  Zhong, K.*, \textbf{Schumacher, F. L.}, Castro, L. M., Lachos, V. H.
+  (2025). Bayesian analysis of censored linear mixed-effects models for
+  heavy-tailed irregularly observed repeated measures. \emph{Statistics
+  in Medicine}, 44, e10295.
+\item
+  Loor Valeriano, K. A., \textbf{Schumacher, F. L.}, Galarza, C. E.,
+  Matos, L. A. (2024). Censored autoregressive regression models with
+  Student-t innovations. \emph{Canadian Journal of Statistics}, 52,
+  804--828.
+\item
+  \textbf{Schumacher, F. L.}, Matos, L. A., Lachos, V. H., Abanto-Valle,
+  C., Castro, L. M. C. (2024). A censored time series analysis for
+  responses on the unit interval: an application to acid rain modeling.
+  \emph{Sankhya A}, 86, 637--660.
+\item
+  \textbf{Schumacher, F. L.}, Lachos, V. H., Matos, L. A. (2021). Scale
+  mixture of skew-normal linear mixed models with within-subject serial
+  dependence. \emph{Statistics in Medicine}, 40(7), 1790--1810.
+\item
+  \textbf{Schumacher, F. L.}, Dey, D. K., Lachos, V. H. (2021).
+  Approximate inferences for nonlinear mixed effects models with scale
+  mixtures of skew-normal distributions. \emph{Journal of Statistical
+  Theory and Practice}, 15(3), 1--26.
+\item
+  \textbf{Schumacher, F. L.}, Ferreira, C. S., Prates, M. O., Lachos,
+  A., Lachos, V. H. (2021). A robust nonlinear mixed-effects model for
+  COVID-19 death data. \emph{Statistics and Its Interface}, 14, 49--57.
+\item
+  \textbf{Schumacher, F. L.}, Lachos, V. H., Vilca-Labra, F. E. (2018).
+  Influence diagnostics for censored regression models with
+  autoregressive errors. \emph{Australian \& New Zealand Journal of
+  Statistics}, 60(2), 209--229.
+\item
+  \textbf{Schumacher, F. L.}, Lachos, V. H., Dey, D. K. (2017). Censored
+  regression models with autoregressive errors: a likelihood-based
+  perspective. \emph{Canadian Journal of Statistics}, 45, 375--392.
+\item
+  Souza, E. M., Alves, D. B. M., \textbf{Schumacher, F. L.} (2015).
+  Harmonic analysis of multipath index time series in GPS stations.
+  \emph{Tendencias em Matemática Aplicada e Computacional (TEMA)}, 16,
+  71.
+\item
+  \textbf{Schumacher, F. L.}, Souza, E. M., Gimenes, E., Uchimura, T.
+  T., Masukawa, M. L. T. (2014). Modelos estruturais em series temporais
+  com aplicação em dados de internação por bronquiolite. \emph{Revista
+  da Estatística da Universidade Federal de Ouro Preto}, III, 188--199.
+\item
+  Philippsen, A. S., Peralta, D., Gazola, S., \textbf{Schumacher, F.
+  L.}, Kung, J. (2014). O jornalismo impresso na comunidade
+  universitária. \emph{Extensio (Florianópolis)}, 11, 16--25.
+\end{enumerate}
+
+\subsection{Statistical applications}\label{statistical-applications}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Zhang, Y., \textbf{Schumacher, F. L.}, Clark, L. A., Clark, B. C.
+  (2026). Leg strength and neural activation deficits in older adults
+  with multiple sclerosis. \emph{Multiple Sclerosis and Related
+  Disorders}, 107050.
+\item
+  Warren, E., \textbf{Schumacher, F. L.}, Keder, L., Lawley, M.,
+  Goedken, P., Dupper, A. C., Gallo, M. F. (2025). Is 6 weeks postpartum
+  too late for contraceptive counseling in the US? A look into the
+  timing of postpartum intercourse. \emph{Journal of Sex Research},
+  1--5.
+\item
+  Allen, M. D., Thompson, A., Clark, B. C., \textbf{Schumacher, F. L.},
+  Zhang, Y. (2025). Multiple sclerosis and sarcopenia: analysis of
+  population-level prevalence and key risk factors from the UK Biobank.
+  \emph{Multiple Sclerosis and Related Disorders}, 102, 106629.
+\item
+  Vavetsi, K., Mendes, K., Gomes, A. T., Marques, T., Rosa, N.,
+  Mandarano, N., \textbf{Schumacher, F. L.}, Tatakis, D. N. (2025). TAM
+  pathway receptor proteins: differential expression in healthy human
+  masticatory mucosa. \emph{Journal of Periodontal Research}, early
+  view.
+\item
+  Jatana, C., Conley, K., Moffitt, A., \textbf{Schumacher, F.}, Emam, H.
+  (2025). Female dental students' perceptions on barriers and motivators
+  in pursuing oral and maxillofacial surgery. \emph{Journal of Dental
+  Education}, 89, 8.
+\item
+  Gallo, M. F., \textbf{Schumacher, F. L.}, Lawley, M., Keim, S. A.,
+  Dupper, A. C., Keder, L. (2025). Potential effect of immediate
+  postpartum use of injectable contraception on lactogenesis.
+  \emph{Contraception}, 110726.
+\item
+  Zaiger, J., Leblebicioglu, B., Meirelles, L., Lu, W.-E.,
+  \textbf{Schumacher, F. L.}, Tatakis, D. N. (2024). Effects of
+  extraoral storage time on autologous gingival graft early healing: a
+  split-mouth randomized study. \emph{Journal of Periodontal Research},
+  59, 1143--1152.
+\item
+  Park, G., Meirelles, L., Gouveia, D., Lee, D., Lu, W. E.,
+  \textbf{Schumacher, F. L.}, Leblebicioglu, B. (2024). Accuracy of
+  dental implant placement with CAD-CAM 3D printed and conventional
+  thermoplastic surgical pilot guides: a clinical comparative trial.
+  \emph{The Journal of Prosthetic Dentistry}, S0022-3913(24)00715-7.
+\item
+  Nassani, L. M., Bencharit, S., \textbf{Schumacher, F.}, Lu, W. E.,
+  Fernandes, G. V. O. (2024). The impact of technology teaching in the
+  dental predoctoral curriculum on students' perception of digital.
+  \emph{Dentistry Journal}, 12(3), 75.
+\item
+  Stanwick, M., Fenesha, F., Hamid, A., Kang, K., Kanniard, D., Kim, I.,
+  Mandarano, N., \textbf{Schumacher, F. L.}, Peters, S. B. (2024).
+  Impaired tertiary dentin secretion after shallow injury in
+  Tgfbr2-deficient dental pulp cells is rescued by extended CGRP
+  signaling. \emph{International Journal of Molecular Sciences}, 25(13),
+  6847.
+\item
+  Stetzel, L., Foucher, F., Jang, S. J., Wu, T.-H., Fields, H.,
+  \textbf{Schumacher, F.}, Richmond, S., Ko, C.-C. (2024). Artificial
+  intelligence for predicting the aesthetic component of the index of
+  orthodontic treatment need. \emph{Bioengineering}, 11(9), 861.
+\item
+  Wu, Y. C., \textbf{Schumacher, F. L.}, Tatakis, D. N. (2024).
+  Participant experience of taking part in periodontal experimental
+  studies. \emph{International Journal of Dentistry}, 2024(1), 8888815.
+\item
+  Conley, K. H., Jatana, C., \textbf{Schumacher, F. L.}, Lu, W. E.,
+  Moffitt, A. (2023). Exploring the attitudes of women dental students
+  regarding becoming oral and maxillofacial surgeons. \emph{Journal of
+  Oral and Maxillofacial Surgery}, 81(9).
+\item
+  Donmez, M. B., Çakmak, G., Dede, D. Ö., Küçükekenci, A. S., Lu, W. E.,
+  \textbf{Schumacher, F. L.}, Revilla-León, M., Yilmaz, B. (2023).
+  Effect of scan powder and scanning technology on measured deviations
+  of complete-arch implant supported frameworks digitized with
+  industrial and intraoral scanners. \emph{Journal of Dentistry}, 138.
+\item
+  Lima, S. G., \textbf{Schumacher, F. L.}, Cazarin, C. B. B. (2023).
+  Front-of-package label in Brazil: comparison of guideline daily
+  amounts, traffic-light and warning systems. \emph{Food and Humanity},
+  1, 199--209.
+\item
+  Yilmaz, B., Dede, D. Ö., Donmez, M. B., Küçükekenci, A. S., Lu, W. E.,
+  \textbf{Schumacher, F. L.}, Çakmak, G. (2023). Comparison of intraoral
+  and laboratory scanners to an industrial-grade scanner while analyzing
+  the fabrication trueness of polymer and titanium complete-arch
+  implant-supported frameworks. \emph{Journal of Dentistry}, 138.
+\end{enumerate}
+
+\section{Papers submitted or under
+revision}\label{papers-submitted-or-under-revision}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Travassos, K.*, Matos, L. A., \textbf{Schumacher, F. L.} Sandwich
+  variance estimation in scale mixture of skew-normal linear mixed
+  models.
+\item
+  Brunehilde Pinto da Silva, C., \textbf{Schumacher, F. L.}, Turkmen, A.
+  A Hamiltonian Monte Carlo approach to Bayesian empirical likelihood in
+  longitudinal data analysis.
+\end{enumerate}
+
+\section{Graduate students trained}\label{graduate-students-trained}
+
+\subsection{PhD dissertation advisor}\label{phd-dissertation-advisor}
+
+\begin{itemize}
+\tightlist
+\item
+  Runze Cui (expected 2029 Ph.D.). Biostatistics, The Ohio State
+  University.
+\item
+  Keyliane Travassos Almeida da Silva (expected 2027 Ph.D.). Statistics,
+  University of Campinas. Co-supervision with Dr.~Larissa A. Matos.
+\end{itemize}
+
+\subsection{PhD dissertation committee
+member}\label{phd-dissertation-committee-member}
+
+\begin{multicols}{2}\raggedright
+
+\begin{itemize}
+\tightlist
+\item
+  Vitoria Spinola (2025--). Health Behavior and Health Promotion.
+\item
+  Amy Dupper (2024--2026). Epidemiology.
+\item
+  Meredith McCormack-Mager (2025). Biostatistics.
+\item
+  Yi Tang Chen (2025). Biostatistics.
+\item
+  Micaela Richter (2025). Biostatistics.
+\item
+  Danielle Tyson (2023--2024). Epidemiology.
+\end{itemize}
+
+\end{multicols}
+
+\subsection{PhD candidacy committee
+member}\label{phd-candidacy-committee-member}
+
+\begin{multicols}{2}\raggedright
+
+\begin{itemize}
+\tightlist
+\item
+  Oksana Kutsa (2026--). Epidemiology.
+\item
+  Fandi Chang (2025--). Biostatistics.
+\item
+  Nick Mandarano (2025). Biostatistics.
+\item
+  Vitoria Spinola (2025). Health Behavior and Health Promotion.
+\item
+  Amy Dupper (2023--2024). Epidemiology.
+\item
+  Micaela Richter (2023--2024). Biostatistics.
+\item
+  Yi Tang Chen (2023). Biostatistics.
+\item
+  Meredith McCormack-Mager (2022--2024). Biostatistics.
+\item
+  Danielle Tyson (2022--2023). Epidemiology.
+\end{itemize}
+
+\end{multicols}
+
+\subsection{Master's thesis advisor}\label{masters-thesis-advisor}
+
+\begin{itemize}
+\tightlist
+\item
+  Sarah Frost, 2026 MPH, Biostatistics, The Ohio State University.
+  \emph{Social and Geographic Determinants of Rabies Post-Exposure
+  Prophylaxis Administration Following Animal Bites in Allegheny
+  County.}
+\item
+  Christilene Tumsiah, 2026 M.S., Biostatistics, The Ohio State
+  University. \emph{The Role of Early Diagnosis in Multiple Sclerosis
+  Disease Trajectories: A Multidimensional Analysis of Clinical and
+  Imaging Outcomes.}
+\item
+  Wenjing Liu, 2026 M.S., Biostatistics, The Ohio State University.
+  \emph{Screening and Selection of DNA Methylation CpGs for Predicting
+  Cognitive Trajectories in ADNI.}
+\item
+  Dimitra Herbei, 2024 M.S., Biostatistics, The Ohio State University.
+  \emph{Exploring the Association of Multiple Sclerosis and Sarcopenia
+  under Missing Data: A Comparative Exploration Based on the UK
+  Biobank.}
+\item
+  Keyliane Travassos Almeida da Silva, 2023 M.S., Statistics, University
+  of Campinas. Co-supervision with Dr.~Larissa A. Matos.
+  \emph{Diagnostic Analysis in Scale Mixture of Skew-Normal Linear Mixed
+  Models.}
+\end{itemize}
+
+\subsection{Master's thesis committee
+member}\label{masters-thesis-committee-member}
+
+\begin{itemize}
+\tightlist
+\item
+  Shankar Mani (2023--2024). Biostatistics.
+\item
+  Jacob Falter (2022--2023). Orthodontics.
+\item
+  Leah N. Stetzel (2022--2023). Orthodontics.
+\end{itemize}
+
+\subsection{Master's examination committee
+member}\label{masters-examination-committee-member}
+
+\begin{multicols}{2}\raggedright
+
+\begin{itemize}
+\tightlist
+\item
+  Kambra Crist. Biostatistics (MPH, 2026 SU).
+\item
+  Victoriah Shade. Epidemiology (MPHP, 2026 SP).
+\item
+  Miriam Donneyong. Epidemiology (MPHP, 2025 SP).
+\item
+  Akua Amponsah. Epidemiology (MPHPEP, 2024 AU).
+\item
+  Madison Theodore. Epidemiology (MPHP, 2024 SP).
+\end{itemize}
+
+\end{multicols}
+
+\section{Undergraduate student
+supervision}\label{undergraduate-student-supervision}
+
+\begin{itemize}
+\tightlist
+\item
+  Syed Rafey Abbas. Ohio Five Summer Undergraduate Research Experience
+  program (2024 SU).
+\item
+  Yiting Lu. Research Internship (2023 SU+AU), Hangzhou Dianzi
+  University, China.
+\item
+  Anthony Thompson. The Ohio State University, Undergraduate Capstone
+  Research in Public Health (2023 SP).
+\end{itemize}
+
+\section{Courses taught}\label{courses-taught}
+
+\subsection{The Ohio State University, College of Public
+Health}\label{the-ohio-state-university-college-of-public-health}
+
+\begin{description}
+\tightlist
+\item[Spring 2026]
+PUBHBIO 7230 --- Applied Longitudinal Data Analysis
+\item[Spring 2025]
+PUBHBIO 7230 --- Applied Longitudinal Data Analysis
+\item[Spring 2024]
+PUBHBIO 7230 --- Applied Longitudinal Data Analysis
+\item[Fall 2023]
+PUBHBIO 6260 --- Ethics in Biostatistics
+\item[Spring 2023]
+PUBHBIO 7230 --- Applied Longitudinal Data Analysis
+\end{description}
+
+\subsection{National School of Statistical Sciences
+(ENCE-IBGE)}\label{national-school-of-statistical-sciences-ence-ibge}
+
+\begin{description}
+\tightlist
+\item[Fall 2017]
+EST065 --- Survey methodology (Planejamento de Pesquisas)
+\end{description}
+
+\section{Professional presentations}\label{professional-presentations}
+
+\subsection{Conferences}\label{conferences}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Flexible joint models for clinical outcomes with skewed and
+  heavy-tailed random effects. \textbf{Topic-contributed paper session.}
+  ASA Joint Statistical Meetings 2026, Boston, MA, USA.
+\item
+  A robust multilevel framework for modeling longitudinal bilateral
+  manual dexterity in multiple sclerosis. \textbf{Oral-contributed
+  presentation.} 33rd International Biometric Conference, Seoul, South
+  Korea.
+\item
+  Bayesian robustness for longitudinal data: scale mixture of
+  skew-normal linear mixed models via HMC. \textbf{Poster presentation.}
+  2026 ISBA World Meeting, Nagoya, Japan.
+\item
+  Sandwich variance estimation in scale mixture of skew-normal linear
+  mixed models. \textbf{Oral-contributed presentation.} ENAR 2026,
+  Indianapolis, IN, USA.
+\item
+  Association between epigenetic aging markers and MS disease outcomes.
+  \textbf{Poster presentation.} ACTRIMS Forum 2026, San Diego, CA, USA.
+\item
+  Censored linear mixed-effects models for heavy-tailed irregularly
+  observed longitudinal data. \textbf{Invited session.} 65th ISI World
+  Statistics Congress, 2025, The Hague, Netherlands.
+\item
+  Statistical pitfalls in measuring biological aging with epigenetic
+  clocks: insights from a chronic disease setting. \textbf{Plenary
+  talk.} 69ª RBras and 21º SEAGRO, Vitoria, ES, Brazil.
+\item
+  EMLMLasso: an EM algorithm implementation for regularization in
+  high-dimensional linear mixed models. \textbf{Poster presentation.}
+  ENAR 2025, New Orleans, LA, USA.
+\item
+  What are we measuring with epigenetic clocks in people with MS?
+  \textbf{Poster presentation.} ACTRIMS Forum 2025, West Palm Beach, FL,
+  USA.
+\item
+  Assessment of biological aging in people with multiple sclerosis based
+  on epigenetic clocks. \textbf{Poster presentation.} 10th Tykeson
+  Fellows Conference, 2024, National Multiple Sclerosis Society, Denver,
+  CO, USA.
+\item
+  Challenges in assessing biological aging in people with multiple
+  sclerosis based on epigenetic clocks. \textbf{Invited session.} 37th
+  New England Statistics Symposium, 2024, University of Connecticut,
+  Storrs, CT, USA.
+\item
+  Bayesian scale mixture of normal censored linear mixed models with
+  within-subject serial dependence. \textbf{Invited session.}
+  CMStatistics 2023, Berlin, Germany.
+\item
+  Variable selection in high-dimensional linear mixed-effects models.
+  \textbf{Contribución científica.} Vigésimas Jornadas en Estadística,
+  2023, Guayaquil, Ecuador.
+\item
+  Panel on how to join and explore pharma. \textbf{Panelist.} Statistics
+  in Pharmaceuticals, 2023, Storrs, CT, USA.
+\item
+  Robust mixed models for longitudinal data: model fitting and
+  evaluation. \textbf{Speed presentation.} ASA Joint Statistical
+  Meetings 2023, Toronto, Canada.
+\item
+  EM algorithm for regularization problems in high-dimensional LMMs.
+  \textbf{Flash talk.} IMS 23rd Meeting of New Researchers in Statistics
+  and Probability, 2023, Toronto, Canada.
+\item
+  Bayesian estimation in scale mixture of skew-normal linear mixed
+  models using Hamiltonian Monte Carlo. \textbf{Oral presentation.} ISI
+  64th World Statistics Congress, 2023, Ottawa, Canada.
+\item
+  Censored autoregressive regression modeling using the R package
+  ARCensReg. \textbf{Oral presentation.} 24th International Conference
+  on Computational Statistics, 2022, Bologna, Italy.
+\item
+  Modeling longitudinal data using robust mixed models in R.
+  \textbf{Tutorial.} 24º Simpósio Nacional de Probabilidade e
+  Estatística (SINAPE), 2022, Gramado, RS, Brazil.
+\item
+  Censored autoregressive regression models with Student-t innovations.
+  \textbf{Oral presentation.} ICSA 2022 Applied Statistics Symposium,
+  2022, Gainesville, FL, USA.
+\item
+  Canonical fundamental skew-t linear mixed models. \textbf{Oral
+  presentation.} III Jornadas Ecuatorianas en Matemáticas, 2021, Ecuador
+  (virtual).
+\item
+  Scale mixture of skew-normal linear mixed models with within-subject
+  serial dependence. \textbf{Poster presentation.} 34th New England
+  Statistics Symposium, 2021, Providence, RI, USA.
+\item
+  skewlmm: an R package for robust estimation of linear mixed models
+  based on scale mixture of skew-normal distributions. \textbf{Poster
+  presentation.} ISI World Statistics Congress 2021.
+\item
+  Canonical fundamental skew-t linear mixed models. \textbf{Oral
+  presentation} (Student Prize Session). Conference in Honour of Fred
+  Smith and Chris Skinner, 2021 (virtual satellite meeting of the ISI
+  World Statistics Congress).
+\item
+  Scale mixture of skew-normal linear mixed models with within-subject
+  serial dependence. \textbf{Oral presentation} (Organized Invited
+  Session). 4th International Conference on Econometrics and Statistics,
+  2021, Hong Kong (virtual).
+\item
+  Robust estimation in linear mixed models using the R package skewlmm.
+  \textbf{Oral presentation.} XV Encontro Científico de Pós-Graduandos
+  do IMECC, November 2020, Campinas, SP, Brazil (virtual).
+\item
+  Autoregressive scale mixture of skew-normal linear mixed models.
+  \textbf{Poster presentation.} VI Workshop em Análise de Sobrevivência
+  e Aplicações (WASA), November 2019, Piracicaba, SP, Brazil.
+\item
+  Influence diagnostics for censored regression models with
+  autoregressive errors. \textbf{Oral presentation.} XVI Escola de
+  Modelos de Regressão (EMR), March 2019, Pirenópolis, GO, Brazil.
+\item
+  Censored regression models with autoregressive errors. \textbf{Oral
+  presentation.} 23º Simpósio Nacional de Probabilidade e Estatística
+  (SINAPE), September 2018, São Pedro, SP, Brazil.
+\item
+  \emph{Imputação de dados faltantes em séries temporais.}
+  \textbf{Poster presentation.} XIV EMR, March 2015, Campinas, SP,
+  Brazil.
+\item
+  \emph{Modelos estruturais em séries temporais com aplicação em dados
+  de internação por bronquiolite.} \textbf{Oral presentation.} 59ª
+  RBras, May 2014, Ouro Preto, MG, Brazil.
+\end{enumerate}
+
+\subsection{Guest lectures}\label{guest-lectures}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Guest speaker discussing difference-in-differences models. VETPREV
+  8725: Quantitative Methods Capstone, The Ohio State University,
+  February 20, 2025.
+\end{enumerate}
+
+\subsection{Other invited
+presentations}\label{other-invited-presentations}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The use of AI in research and teaching of biostatistics at OSU.
+  \textbf{Seminar.} Department of Mathematics and Statistics, Federal
+  University of São João del-Rei, São João del-Rei, MG, Brazil, December
+  11, 2025.
+\item
+  Challenges in longitudinal data analysis: complex made simple with the
+  R package skewlmm. \textbf{Seminar.} 2024 Fall Speaker and Annual
+  Banquet, Columbus ASA Chapter, Columbus, OH, USA, September 16, 2024.
+\item
+  Lessons from an ethics in biostatistics course. \textbf{Seminar.}
+  Department of Statistics, University of Campinas, Campinas, SP,
+  Brazil, July 12, 2024.
+\item
+  Scale mixture of skew-normal linear mixed models: a Bayesian approach
+  using Hamiltonian Monte Carlo. \textbf{Seminar.} Department of
+  Bioinformatics and Biostatistics, University of Louisville,
+  Louisville, KY, USA, January 26, 2024.
+\item
+  Penalized estimation of scale mixture of skew-normal linear mixed
+  models using Hamiltonian Monte Carlo. \textbf{Seminar.} Division of
+  Biostatistics and Bioinformatics, University of Cincinnati, October
+  27, 2023.
+\item
+  Penalized estimation of scale mixture of skew-normal linear mixed
+  models using Hamiltonian Monte Carlo. \textbf{Seminar.} Department of
+  Statistics, The Ohio State University, October 19, 2023.
+\item
+  Penalized estimation of scale mixture of skew-normal linear mixed
+  models using Hamiltonian Monte Carlo. \textbf{Colloquium.} Department
+  of Statistics, Federal University of Minas Gerais, September 22, 2023.
+\item
+  A trajetória acadêmica e uma introdução a modelos mistos para dados
+  longitudinais. \textbf{Invited lecture.} Department of Statistics,
+  State University of Maringa, March 23, 2022.
+\item
+  Robust mixed-effects models for longitudinal data.
+  \textbf{Colloquium.} Department of Statistics, University of
+  Connecticut, November 17, 2021.
+\end{enumerate}
+
+\section{Software}\label{software}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Schumacher, F. L.}, Matos, L. A., Lachos, V. H. (2020).
+  skewlmm: Scale mixture of skew-normal linear mixed models.
+  \url{https://cran.r-project.org/package=skewlmm}
+\item
+  Zhong, K., \textbf{Schumacher, F. L.}, Castro, L. M., Lachos, V. H.,
+  Carrasco, J. M. F. (2025). SMNlmec: Scale mixture of normal
+  distribution in linear mixed-effects model.
+  \url{https://cran.r-project.org/package=SMNlmec}
+\item
+  \textbf{Schumacher, F. L.}, Lachos, V. H., Galarza, C. E. (2016).
+  ARCensReg: Fitting univariate censored linear regression model with
+  autoregressive errors.
+  \url{https://cran.r-project.org/package=ARCensReg}
+\end{enumerate}
+
+\section{Professional service}\label{professional-service}
+
+\subsection{Conference and workshop
+organization}\label{conference-and-workshop-organization}
+
+\begin{itemize}
+\tightlist
+\item
+  Statistics in Pharmaceuticals 2023. University of Connecticut, Storrs,
+  CT, USA. Member of the Organizing Committee.
+\item
+  XIII Encontro Científico dos Pós-Graduandos do IMECC, 2018. Campinas,
+  SP, Brazil. Member of the Organizing Committee.
+\end{itemize}
+
+\subsection{Associate editor}\label{associate-editor}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Sankhya B}, 2023--2026.
+\end{itemize}
+
+\subsection{Professional societies}\label{professional-societies}
+
+\begin{itemize}
+\tightlist
+\item
+  American Statistical Association, Columbus Chapter --- Communication
+  Officer, 2025--present.
+\item
+  Caucus for Women in Statistics --- Award Committee member,
+  2025--present.
+\end{itemize}
+
+\subsection{Service to the profession}\label{service-to-the-profession}
+
+\begin{itemize}
+\tightlist
+\item
+  MS Australia, Incubator Grant Reviewer, 2026.
+\item
+  Patient-Centered Outcomes Research Institute (PCORI), Methods Merit
+  Reviewer, 2025.
+\item
+  OSU Florence Nightingale Day for Statistics and Data Science, activity
+  leader, October 2023, October 2024, and October 2025.
+\item
+  OSU TDAI Data Science Summer Camp, panelist, June 2023.
+\end{itemize}
+
+\subsection{Referee service}\label{referee-service}
+
+\begin{multicols}{2}\raggedright
+
+\begin{itemize}
+\tightlist
+\item
+  Biometrics
+\item
+  Brazilian Journal of Probability and Statistics
+\item
+  Communications for Statistical Applications and Methods
+\item
+  Communications in Statistics --- Case Studies and Data Analysis
+\item
+  Environmental and Ecological Statistics
+\item
+  Frontiers in Neurology
+\item
+  IEEE Transactions on Industrial Informatics
+\item
+  Infectious Disease Modelling
+\item
+  JAMA Neurology
+\item
+  Journal of Alzheimer's Disease
+\item
+  Journal of Applied Statistics
+\item
+  Journal of Multivariate Analysis
+\item
+  Journal of Scientific Research and Reports
+\item
+  Journal of Statistical Computation and Simulation
+\item
+  Journal of Statistical Theory and Practice
+\item
+  Journal of the Korean Statistical Society
+\item
+  Journal of the Royal Statistical Society: Series C
+\item
+  Neurology
+\item
+  R Journal
+\item
+  Sankhya B
+\item
+  Statistics
+\item
+  Statistics and Computing
+\item
+  Statistics in Medicine
+\end{itemize}
+
+\end{multicols}
+
+\subsection{Professional affiliations}\label{professional-affiliations}
+
+\begin{multicols}{2}\raggedright
+
+\begin{itemize}
+\tightlist
+\item
+  American Statistical Association
+\item
+  Associação Brasileira de Estatística (ABE)
+\item
+  Caucus for Women in Statistics
+\item
+  International Statistical Institute
+\item
+  Região Brasileira da Sociedade Internacional de Biometria (RBras)
+\end{itemize}
+
+\end{multicols}
+
+\section{Online profiles}\label{online-profiles}
+
+\begin{description}
+\tightlist
+\item[ORCID]
+\url{https://orcid.org/0000-0002-5724-8918}
+\item[Google Scholar]
+\url{https://scholar.google.com.br/citations?user=WNtJVuUAAAAJ}
+\item[OSU profile]
+\url{https://cph.osu.edu/people/fschumacher}
+\item[Personal page]
+\url{https://sites.google.com/view/fernandalschumacher/}
+\end{description}
+
+
+
+
+\end{document}
